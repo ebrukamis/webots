@@ -156,13 +156,6 @@ void WbSolid::init() {
   mLinearVelocity = findSFVector3("linearVelocity");
   mAngularVelocity = findSFVector3("angularVelocity");
 
-  if (mLinearVelocity && mAngularVelocity) {
-    updateIsLinearVelocityNull();
-    updateIsAngularVelocityNull();
-    connect(mLinearVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsLinearVelocityNull);
-    connect(mAngularVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsAngularVelocityNull);
-  }
-
   mOriginalHiddenKinematicParameters = NULL;
 }
 
@@ -265,6 +258,11 @@ void WbSolid::validateProtoNode() {
 
 void WbSolid::preFinalize() {
   mHasNoSolidAncestor = false;
+
+  if (mLinearVelocity)
+    updateIsLinearVelocityNull();
+  if (mAngularVelocity)
+    updateIsAngularVelocityNull();
 
   cSolids << this;
 
@@ -442,6 +440,11 @@ bool WbSolid::applyHiddenKinematicParameters(const HiddenKinematicParameters *hk
 void WbSolid::postFinalize() {
   delete mOriginalHiddenKinematicParameters;
   mOriginalHiddenKinematicParameters = NULL;
+
+  if (mLinearVelocity)
+    connect(mLinearVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsLinearVelocityNull);
+  if (mAngularVelocity)
+    connect(mAngularVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsAngularVelocityNull);
 
   WbMatter::postFinalize();
   if (physics())
