@@ -151,10 +151,19 @@ void WbSolid::init() {
   mPhysics = findSFNode("physics");
   mRadarCrossSection = findSFDouble("radarCrossSection");
   mRecognitionColors = findMFColor("recognitionColors");
-
   // hidden fields
   mLinearVelocity = findSFVector3("linearVelocity");
   mAngularVelocity = findSFVector3("angularVelocity");
+
+  if (mLinearVelocity)
+    updateIsLinearVelocityNull();
+  if (mAngularVelocity)
+    updateIsAngularVelocityNull();
+
+  if (mLinearVelocity)
+    connect(mLinearVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsLinearVelocityNull);
+  if (mAngularVelocity)
+    connect(mAngularVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsAngularVelocityNull);
 
   mOriginalHiddenKinematicParameters = NULL;
 }
@@ -258,11 +267,6 @@ void WbSolid::validateProtoNode() {
 
 void WbSolid::preFinalize() {
   mHasNoSolidAncestor = false;
-
-  if (mLinearVelocity)
-    updateIsLinearVelocityNull();
-  if (mAngularVelocity)
-    updateIsAngularVelocityNull();
 
   cSolids << this;
 
@@ -440,11 +444,6 @@ bool WbSolid::applyHiddenKinematicParameters(const HiddenKinematicParameters *hk
 void WbSolid::postFinalize() {
   delete mOriginalHiddenKinematicParameters;
   mOriginalHiddenKinematicParameters = NULL;
-
-  if (mLinearVelocity)
-    connect(mLinearVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsLinearVelocityNull);
-  if (mAngularVelocity)
-    connect(mAngularVelocity, &WbSFVector3::changed, this, &WbSolid::updateIsAngularVelocityNull);
 
   WbMatter::postFinalize();
   if (physics())
@@ -1934,7 +1933,9 @@ void WbSolid::applyPhysicsTransform() {
   if (mLinearVelocity && mAngularVelocity) {
     const double *const l = dBodyGetLinearVel(b);
     const double *const a = dBodyGetAngularVel(b);
+    printf("setting lin velocity\n");
     mLinearVelocity->setValue(l[0], l[1], l[2]);
+    printf("setting ang velocity\n");
     mAngularVelocity->setValue(a[0], a[1], a[2]);
   }
 
@@ -1996,10 +1997,11 @@ void WbSolid::postPhysicsStep() {
     applyPhysicsTransform();
 
   // Warning: do not use foreach here => Qt foreach loop are very inefficient here
+  printf("[%s] mJointChildren >> postPhysicsStep\n", name().toUtf8().constData());
   for (i = 0; i < mJointChildren.size(); ++i)
     if (mJointChildren.at(i)->isEnabled())
       mJointChildren.at(i)->postPhysicsStep();
-
+  printf("[%s] mSolidChildren >> postPhysicsStep\n", name().toUtf8().constData());
   for (i = 0; i < mSolidChildren.size(); ++i)
     mSolidChildren.at(i)->postPhysicsStep();
 }

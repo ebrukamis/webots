@@ -42,7 +42,11 @@ public:
   const WbVector3 axis() const { return mAxis ? mAxis->value() : WbVector3(); }
 
   void setPosition(double p) { mPosition->setValue(p); }
-  void setPositionFromOde(double p) { mPosition->setValueFromOde(p); }
+  void setPositionFromOde(double p) {
+    printf("WbJointParameters\n");
+    printf("  calling mPosition->setValueFromOde()\n");
+    mPosition->setValueFromOde(p);
+  }
 
 signals:
   void positionChanged();

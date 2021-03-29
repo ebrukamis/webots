@@ -47,7 +47,9 @@ public:
   void setValue(double d);
   void setValueNoSignal(double d) { mValue = d; }
   void setValueFromOde(double d) {
+    printf("setValueFromOde (SFDouble)\n");
     mValue = d;
+    printf("  >>> emit changedByOde\n");
     emit changedByOde();
   }
   void add(double d);

@@ -49,7 +49,11 @@ public:
   // virtual comparison and assignment
   virtual bool equals(const WbValue *other) const = 0;
   virtual void copyFrom(const WbValue *other) = 0;
-  void emitChangedByOde() { emit changedByOde(); }
+  void emitChangedByOde() {
+    printf("emitChangedByOde\n");
+    printf("  >>> emit changedByOde\n");
+    emit changedByOde();
+  }
 
   // string for the GUI
   // level is not meaningful in all the subclasses.

@@ -52,11 +52,15 @@ public:
   void setValue(double x, double y, double z);
   void setValueNoSignal(double x, double y, double z) { mValue.setXyz(x, y, z); }
   void setValueFromOde(double x, double y, double z) {
+    printf("setValueFromOde (SFVector3, x,y,z)\n");
     mValue.setXyz(x, y, z);
+    printf("  >>> emit changedByOde\n");
     emit changedByOde();
   }
   void setValueFromOde(const WbVector3 &v) {
+    printf("setValueFromOde (SFVector3, WbVector3)\n");
     mValue.setXyz(v.x(), v.y(), v.z());
+    printf("  >>> emit changedByOde\n");
     emit changedByOde();
   }
   void setValueByUser(const WbVector3 &v, bool changedFromSupervisor);

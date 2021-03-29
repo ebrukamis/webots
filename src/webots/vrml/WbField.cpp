@@ -401,6 +401,7 @@ void WbField::parameterNodeRemoved(int index) {
 
 // propagate change in a node field to a proto parameter
 void WbField::fieldChanged() {
+  printf("WbField::fieldChanged\n");
   // do not propagate a node change back to the proto parameter otherwise we would loop infinitly
   // because the break condition (node == node) is not fully functional
   if (singleType() != WB_SF_NODE)
@@ -408,11 +409,13 @@ void WbField::fieldChanged() {
 }
 
 void WbField::fieldChangedByOde() {
+  printf("WbField::fieldChangedByOde\n");
   // do not propagate a node change back to the proto parameter otherwise we would loop infinitly
   // because the break condition (node == node) is not fully functional
   mValue->blockSignals(true);
   mValue->copyFrom(static_cast<WbValue *>(sender()));
   mValue->blockSignals(false);
+  printf("  calling mvalue->emitChangedByOde\n");
   mValue->emitChangedByOde();
 }
 

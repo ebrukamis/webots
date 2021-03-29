@@ -347,6 +347,7 @@ void WbHingeJoint::prePhysicsStep(double ms) {
 }
 
 void WbHingeJoint::postPhysicsStep() {
+  printf("WbHingeJoint\n");
   assert(mJoint);
   WbRotationalMotor *const rm = rotationalMotor();
   if (rm && rm->isPIDPositionControl()) {  // if controlling in position we update position using directly the angle feedback
@@ -363,9 +364,10 @@ void WbHingeJoint::postPhysicsStep() {
     mPosition -= angleRate * mTimeStep / 1000.0;
   }
   WbJointParameters *const p = parameters();
-  if (p)
+  if (p) {
+    printf("call setPositionFromOde\n");
     p->setPositionFromOde(mPosition);
-
+  }
   if (isEnabled() && rm && rm->hasMuscles() && !rm->userControl())
     // dynamic position or velocity control
     emit updateMuscleStretch(rm->computeFeedback() / rm->maxForceOrTorque(), false, 1);

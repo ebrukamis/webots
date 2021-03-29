@@ -39,10 +39,13 @@ void WbSFVector3::setValue(const WbVector3 &v) {
 }
 
 void WbSFVector3::setValue(double x, double y, double z) {
+  printf("WbSFVector3\n");
+
   if (mValue == WbVector3(x, y, z))
     return;
 
   mValue.setXyz(x, y, z);
+  printf("  >>> emit changed()\n");
   emit changed();
 }
 
