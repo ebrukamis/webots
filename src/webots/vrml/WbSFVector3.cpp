@@ -31,15 +31,17 @@ void WbSFVector3::readSFVector3(WbTokenizer *tokenizer, const QString &worldPath
 }
 
 void WbSFVector3::setValue(const WbVector3 &v) {
+  printf("WbSFVector3 (WbVector3)\n");
   if (mValue == v)
     return;
 
   mValue = v;
+  printf("  >> emit changed()\n");
   emit changed();
 }
 
 void WbSFVector3::setValue(double x, double y, double z) {
-  printf("WbSFVector3\n");
+  printf("WbSFVector3 (x,y,z)\n");
 
   if (mValue == WbVector3(x, y, z))
     return;
@@ -50,10 +52,13 @@ void WbSFVector3::setValue(double x, double y, double z) {
 }
 
 void WbSFVector3::setValue(const double xyz[3]) {
+  printf("WbSFVector3 (xyz[])\n");
+
   if (mValue == WbVector3(xyz))
     return;
 
   mValue.setXyz(xyz);
+  printf("  >>> emit changed()\n");
   emit changed();
 }
 
@@ -84,10 +89,12 @@ void WbSFVector3::setComponent(int index, double d) {
 }
 
 WbSFVector3 &WbSFVector3::operator=(const WbSFVector3 &other) {
+  printf("WbSFVector3::operator=\n");
   if (mValue == other.mValue)
     return *this;
 
   mValue = other.mValue;
+  printf("  >>> emit changed()\n");
   emit changed();
   return *this;
 }

@@ -246,6 +246,7 @@ void WbSimulationWorld::step() {
     mPhysicsPlugin->stepEnd();
 
   // call postPhysicsStep on all Solids to assign new coordinates
+  printf("------------------------------\n");
   foreach (WbSolid *const solid, l)
     solid->postPhysicsStep();
 

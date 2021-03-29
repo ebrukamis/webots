@@ -308,7 +308,7 @@ bool WbField::isHiddenParameter() const {
 // redirect this node field to a proto parameter
 void WbField::redirectTo(WbField *parameter) {
   // qDebug() << "redirectTo: " << this << " " << name() << " -> " << parameter << " " << parameter->name();
-
+  // printf("REDIRECT FIELD %s -> parameter %s\n", name().toUtf8().constData(), parameter->name().toUtf8().constData());
   if (this == parameter || parameter->mInternalFields.contains(this)) {
     // skip self and duplicated redirection
     return;
@@ -358,6 +358,7 @@ void WbField::removeInternalField(QObject *field) {
 
 // propagate change in proto parameter to a node field
 void WbField::parameterChanged() {
+  printf("WbField::parameterChanged\n");
   WbSFNode *sfnode = dynamic_cast<WbSFNode *>(mValue);
   if (sfnode && sfnode->value()) {
     WbNode *node = sfnode->value();

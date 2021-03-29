@@ -60,6 +60,7 @@ void WbSFNode::write(WbVrmlWriter &writer) const {
 }
 
 void WbSFNode::setValue(WbNode *node) {
+  printf("WbSFNode::setValue\n");
   if (mValue == node)
     return;
 
@@ -67,11 +68,14 @@ void WbSFNode::setValue(WbNode *node) {
   mValue = node;
   if (mValue)
     mValue->setInsertionCompleted();
+
+  printf("  >> emit changed()\n");
   emit changed();
   delete tmp;
 }
 
 WbSFNode &WbSFNode::operator=(const WbSFNode &other) {
+  printf("WbSFNode::operator=\n");
   if (this == &other)
     return *this;
 

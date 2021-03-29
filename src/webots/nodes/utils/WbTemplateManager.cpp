@@ -122,11 +122,14 @@ bool WbTemplateManager::nodeNeedsToSubscribe(WbNode *node) {
 
 void WbTemplateManager::recursiveFieldSubscribeToRegenerateNode(WbNode *node, bool subscribedNode, bool subscribedDescendant) {
   if (subscribedNode || subscribedDescendant) {
-    if (node->isProtoInstance())
+    if (node->isProtoInstance()) {
+      printf("node is proto instance\n");
       connect(node, &WbNode::parameterChanged, this, &WbTemplateManager::regenerateNodeFromParameterChange,
               Qt::UniqueConnection);
-    else
+    } else {
+      printf("node is not proto instance\n");
       connect(node, &WbNode::fieldChanged, this, &WbTemplateManager::regenerateNodeFromFieldChange, Qt::UniqueConnection);
+    }
   }
 
   // if PROTO node:

@@ -1147,10 +1147,12 @@ void WbSolid::setAngularVelocity(const double velocity[3]) {
 }
 
 void WbSolid::updateIsLinearVelocityNull() {
+  printf("updateIsLinearVelocityNull\n");
   mIsLinearVelocityNull = mLinearVelocity->value().isNull();
 }
 
 void WbSolid::updateIsAngularVelocityNull() {
+  printf("updateIsAngularVelocityNull\n");
   mIsAngularVelocityNull = mAngularVelocity->value().isNull();
 }
 
@@ -2001,6 +2003,7 @@ void WbSolid::postPhysicsStep() {
   for (i = 0; i < mJointChildren.size(); ++i)
     if (mJointChildren.at(i)->isEnabled())
       mJointChildren.at(i)->postPhysicsStep();
+  printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
   printf("[%s] mSolidChildren >> postPhysicsStep\n", name().toUtf8().constData());
   for (i = 0; i < mSolidChildren.size(); ++i)
     mSolidChildren.at(i)->postPhysicsStep();
@@ -2889,10 +2892,12 @@ void WbSolid::collectHiddenKinematicParameters(HiddenKinematicParametersMap &map
 ///////////////////
 
 void WbSolid::saveHiddenFieldValues() const {
+  printf("saveHiddenFieldValues\n");
   if (isSolidMerger()) {
     const dBodyID b = mSolidMerger->body();
     const double *const l = dBodyGetLinearVel(b);
     const double *const a = dBodyGetAngularVel(b);
+    printf("  setValue(x, y, z)\n");
     mLinearVelocity->setValue(l[0], l[1], l[2]);
     mAngularVelocity->setValue(a[0], a[1], a[2]);
   }

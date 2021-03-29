@@ -53,10 +53,12 @@ bool WbSFDouble::clip(double min, double max) {
 }
 
 void WbSFDouble::setValue(double d) {
+  printf("WbSFDouble\n");
   if (mValue == d)
     return;
 
   mValue = d;
+  printf(" >>> emit changed()\n");
   emit changed();
 }
 
