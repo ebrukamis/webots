@@ -367,6 +367,8 @@ void WbHingeJoint::postPhysicsStep() {
   if (p) {
     printf("call setPositionFromOde\n");
     p->setPositionFromOde(mPosition);
+    // printf("call setPosition\n");
+    // p->setPosition(mPosition);
   }
   if (isEnabled() && rm && rm->hasMuscles() && !rm->userControl())
     // dynamic position or velocity control
@@ -374,6 +376,7 @@ void WbHingeJoint::postPhysicsStep() {
 }
 
 void WbHingeJoint::updatePosition() {
+  printf("updatePosition callback\n");
   // Update triggered by an artificial move, i.e. a move caused by the user or a Supervisor
   const WbJointParameters *const p = parameters();
 

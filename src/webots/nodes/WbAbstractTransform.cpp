@@ -442,11 +442,13 @@ void WbAbstractTransform::setScaleNeedUpdateFlag() const {
 
 void WbAbstractTransform::setTranslationAndRotation(double tx, double ty, double tz, double rx, double ry, double rz,
                                                     double angle) {
+  printf("WbAbstractTransform::setTranslationAndRotation (tx,ty...) + setValue\n");
   mTranslation->setValue(tx, ty, tz);
   mRotation->setValue(rx, ry, rz, angle);
 }
 
 void WbAbstractTransform::setTranslationAndRotation(const WbVector3 &v, const WbRotation &r) {
+  printf("WbAbstractTransform::setTranslationAndRotation (WbVector3) + setValue\n");
   mTranslation->setValue(v);
   mRotation->setValue(r);
 }

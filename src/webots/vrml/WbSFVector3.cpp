@@ -106,5 +106,7 @@ bool WbSFVector3::equals(const WbValue *other) const {
 
 void WbSFVector3::copyFrom(const WbValue *other) {
   const WbSFVector3 *that = dynamic_cast<const WbSFVector3 *>(other);
+  printf("a\n");
   *this = *that;
+  printf("b\n");
 }

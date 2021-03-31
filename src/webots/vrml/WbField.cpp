@@ -358,7 +358,7 @@ void WbField::removeInternalField(QObject *field) {
 
 // propagate change in proto parameter to a node field
 void WbField::parameterChanged() {
-  printf("WbField::parameterChanged\n");
+  printf("WbField::parameterChanged (%s)\n", name().toUtf8().constData());
   WbSFNode *sfnode = dynamic_cast<WbSFNode *>(mValue);
   if (sfnode && sfnode->value()) {
     WbNode *node = sfnode->value();
@@ -402,7 +402,7 @@ void WbField::parameterNodeRemoved(int index) {
 
 // propagate change in a node field to a proto parameter
 void WbField::fieldChanged() {
-  printf("WbField::fieldChanged\n");
+  printf("WbField::fieldChanged (%s)\n", name().toUtf8().constData());
   // do not propagate a node change back to the proto parameter otherwise we would loop infinitly
   // because the break condition (node == node) is not fully functional
   if (singleType() != WB_SF_NODE)
@@ -410,7 +410,7 @@ void WbField::fieldChanged() {
 }
 
 void WbField::fieldChangedByOde() {
-  printf("WbField::fieldChangedByOde\n");
+  printf("WbField::fieldChangedByOde (%s)\n", name().toUtf8().constData());
   // do not propagate a node change back to the proto parameter otherwise we would loop infinitly
   // because the break condition (node == node) is not fully functional
   mValue->blockSignals(true);

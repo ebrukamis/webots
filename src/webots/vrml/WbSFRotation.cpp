@@ -33,18 +33,22 @@ void WbSFRotation::readSFRotation(WbTokenizer *tokenizer, const QString &worldPa
 }
 
 void WbSFRotation::setValue(const WbRotation &v) {
+  printf("WbSFRotation::setValue (WbRotation)\n");
   if (mValue == v)
     return;
 
   mValue = v;
+  printf("  >> emit changed()\n");
   emit changed();
 }
 
 void WbSFRotation::setValue(double x, double y, double z, double angle) {
+  printf("WbSFRotation::setValue (x,y,z,a)\n");
   if (mValue == WbRotation(x, y, z, angle))
     return;
 
   mValue.setAxisAngle(x, y, z, angle);
+  printf("  >> emit changed()\n");
   emit changed();
 }
 

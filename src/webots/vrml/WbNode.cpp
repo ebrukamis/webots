@@ -749,12 +749,12 @@ void WbNode::resetUseAncestorFlag() {
 
 // called after any field of this node has changed
 void WbNode::notifyFieldChanged() {
-  printf("WbNode::notifyFieldChanged\n");
   // this is the changed field
   WbField *const field = static_cast<WbField *>(sender());
+  printf("WbNode::notifyFieldChanged (%s)\n", field->name().toUtf8().constData());
 
   if (mIsBeingDeleted || cUpdatingDictionary) {
-    printf("  >> emit fieldChanged\n");
+    printf("  >> emit fieldChanged(field)\n");
     emit fieldChanged(field);
     return;
   }
@@ -795,14 +795,14 @@ void WbNode::notifyFieldChanged() {
     n = p;
   } while (!n->isWorldRoot());
 
-  printf("  >> emit fieldChanged\n");
+  printf("  >> emit fieldChanged(field)\n");
   emit fieldChanged(field);
 }
 
 void WbNode::notifyParameterChanged() {
-  printf("WbNode::notifyParameterChanged\n");
   WbField *const parameter = static_cast<WbField *>(sender());
-  printf("  >> emit parameterChanged\n");
+  printf("WbNode::notifyParameterChanged (%s)\n", parameter->name().toUtf8().constData());
+  printf("  >> emit parameterChanged(parameter)\n");
   emit parameterChanged(parameter);
 }
 
