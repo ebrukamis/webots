@@ -706,7 +706,7 @@ Clipboard images can be created either with the `wb_display_image_new`, `wb_disp
 They should be deleted with the `wb_display_image_delete` function when they are no more used.
 Finally, note that both the main display image and the clipboard images have an alpha channel.
 
-The `wb_display_image_new` function creates a new clipboard image, with the specified `with` and `height`, and loads the image `data` into it with respect to the defined image `format`.
+The `wb_display_image_new` function creates a new clipboard image, with the specified `width` and `height`, and loads the image `data` into it with respect to the defined image `format`.
 Five images format are supported: `WB_IMAGE_BGRA` which is the recommended one and the image format returned by a `Camera` device, `WB_IMAGE_RGB`, `WB_IMAGE_RGBA`, `WB_IMAGE_ARGB`,  and `WB_IMAGE_ABGR`.
 
 The `wb_display_image_load` function creates a new clipboard image, loads an image file into it and returns a reference to the new clipboard image.
